@@ -4,13 +4,28 @@ import useWindowSize from "../utils/useWindowSize"
 import Img from "gatsby-image"
 import styled from "styled-components"
 
-const HomeStyles = styled.section`
+const HomeContainer = styled.div`
+  position: relative;
+  top: -80px;
   height: 100vh;
+
+  .gatsby-image-wrapper {
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+  @media (min-width: 1024px) {
+    top: -120px;
+  }
+`
+
+const HomeStyles = styled.section`
+  height: 100%;
   display: flex;
   align-items: center;
   padding: 0 24px;
-  position: relative;
-  top: -80px;
   h2 {
     font-weight: 300;
     text-transform: uppercase;
@@ -25,14 +40,6 @@ const HomeStyles = styled.section`
     }
   }
 
-  .gatsby-image-wrapper {
-    position: absolute !important;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-  }
-
   @media (min-width: 767px) {
     padding: 0 60px;
     h2 {
@@ -42,7 +49,6 @@ const HomeStyles = styled.section`
   }
 
   @media (min-width: 1024px) {
-    top: -120px;
     padding: 0 60px;
     max-width: 1440px;
     margin: 0 auto;
@@ -55,7 +61,7 @@ const HomeStyles = styled.section`
 const HomePage = ({ data }) => {
   const width = useWindowSize()
   return (
-    <>
+    <HomeContainer>
       <HomeStyles>
         <h2>
           Immersive {width > 1024 && <br />}experiences {width > 1024 && <br />}
@@ -63,7 +69,7 @@ const HomePage = ({ data }) => {
         </h2>
         <Img fluid={width < 1024 ? data.mobile.fluid : data.desktop.fluid} />
       </HomeStyles>
-    </>
+    </HomeContainer>
   )
 }
 
