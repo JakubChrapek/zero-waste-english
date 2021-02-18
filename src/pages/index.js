@@ -1,69 +1,73 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
+import useWindowSize from "../utils/useWindowSize"
+import Img from "gatsby-image"
+import styled from "styled-components"
 
-import Bio from "../components/bio"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
-
-const BlogIndex = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata?.title || `Title`
-  const posts = data.allMarkdownRemark.nodes
-
-  if (posts.length === 0) {
-    return (
-      <Layout location={location} title={siteTitle}>
-        <SEO title="All posts" />
-        <Bio />
-        <p>
-          No blog posts found. Add markdown posts to "content/blog" (or the
-          directory you specified for the "gatsby-source-filesystem" plugin in
-          gatsby-config.js).
-        </p>
-      </Layout>
-    )
+const HomeStyles = styled.section`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  position: relative;
+  top: -80px;
+  h2 {
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 32px;
+    line-height: 1.1;
+    color: var(--white);
+    padding: 20px 24px;
+    border: 2px solid var(--white);
+    z-index: 1;
+    @media (min-width: 360px) {
+      font-size: 38px;
+    }
   }
 
-  return (
-    <Layout location={location} title={siteTitle}>
-      <SEO title="All posts" />
-      <Bio />
-      <ol style={{ listStyle: `none` }}>
-        {posts.map(post => {
-          const title = post.frontmatter.title || post.fields.slug
+  .gatsby-image-wrapper {
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
 
-          return (
-            <li key={post.fields.slug}>
-              <article
-                className="post-list-item"
-                itemScope
-                itemType="http://schema.org/Article"
-              >
-                <header>
-                  <h2>
-                    <Link to={post.fields.slug} itemProp="url">
-                      <span itemProp="headline">{title}</span>
-                    </Link>
-                  </h2>
-                  <small>{post.frontmatter.date}</small>
-                </header>
-                <section>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: post.frontmatter.description || post.excerpt,
-                    }}
-                    itemProp="description"
-                  />
-                </section>
-              </article>
-            </li>
-          )
-        })}
-      </ol>
-    </Layout>
+  @media (min-width: 767px) {
+    padding: 0 60px;
+    h2 {
+      font-size: 80px;
+      padding: 40px 60px 40px 50px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    top: -120px;
+    padding: 0 60px;
+    max-width: 1440px;
+    margin: 0 auto;
+    h2 {
+      padding: 40px 100px 40px 50px;
+    }
+  }
+`
+
+const HomePage = ({ data }) => {
+  const width = useWindowSize()
+  return (
+    <>
+      <HomeStyles>
+        <h2>
+          Immersive {width > 1024 && <br />}experiences {width > 1024 && <br />}
+          that {width < 767 && <br />}deliver
+        </h2>
+        <Img fluid={width < 1024 ? data.mobile.fluid : data.desktop.fluid} />
+      </HomeStyles>
+    </>
   )
 }
 
-export default BlogIndex
+export default HomePage
 
 export const pageQuery = graphql`
   query {
@@ -72,17 +76,18 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      nodes {
-        excerpt
-        fields {
-          slug
-        }
-        frontmatter {
-          date(formatString: "MMMM DD, YYYY")
-          title
-          description
-        }
+    mobile: imageSharp(
+      fluid: { originalName: { eq: "image-hero-mobile.jpg" } }
+    ) {
+      fluid(quality: 90, maxWidth: 1920) {
+        ...GatsbyImageSharpFluid_withWebp
+      }
+    }
+    desktop: imageSharp(
+      fluid: { originalName: { eq: "image-hero-desktop.jpg" } }
+    ) {
+      fluid(quality: 90, maxWidth: 1920) {
+        ...GatsbyImageSharpFluid_withWebp
       }
     }
   }

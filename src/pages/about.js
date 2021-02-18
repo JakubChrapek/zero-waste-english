@@ -1,11 +1,11 @@
 import React from "react"
 import BgSection from "../components/bgSection"
 
-const NotFoundPage = () => {
+const About = () => {
   return (
     <>
       <BgSection
-        title="404: Nie znaleziono, smutek."
+        title="o nas"
         linkAnchor="/"
         linkText="Wróć do strony głównej"
       />
@@ -13,4 +13,4 @@ const NotFoundPage = () => {
   )
 }
 
-export default NotFoundPage
+export default About

@@ -1,35 +1,48 @@
 import React from "react"
 import { Link } from "gatsby"
+import { Helmet } from "react-helmet"
+import { createGlobalStyle } from "styled-components"
+import Header from "./header"
+import "@fontsource/alata"
+import "@fontsource/josefin-sans/300.css"
 
-const Layout = ({ location, title, children }) => {
-  const rootPath = `${__PATH_PREFIX__}/`
-  const isRootPath = location.pathname === rootPath
-  let header
-
-  if (isRootPath) {
-    header = (
-      <h1 className="main-heading">
-        <Link to="/">{title}</Link>
-      </h1>
-    )
-  } else {
-    header = (
-      <Link className="header-link-home" to="/">
-        {title}
-      </Link>
-    )
+const GlobalStyles = createGlobalStyle`
+  html {
+    --white: #fff;
+    --black: #2d2d2d;
   }
 
+  *, *:after, *:before {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  } 
+
+  body {
+    font-family: "Josefin Sans";
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  h1 {
+    font-family: "Alata";
+  }
+`
+
+const Layout = ({ title, children }) => {
   return (
-    <div className="global-wrapper" data-is-root-path={isRootPath}>
-      <header className="global-header">{header}</header>
+    <>
+      <GlobalStyles />
+      <Helmet>
+        <title>
+          {title
+            ? title
+            : "Wirtualna rzeczywistość w Twoim biznesie | loopstudios"}
+        </title>
+      </Helmet>
+      <Header />
       <main>{children}</main>
-      <footer>
-        © {new Date().getFullYear()}, Built with
-        {` `}
-        <a href="https://www.gatsbyjs.com">Gatsby</a>
-      </footer>
-    </div>
+    </>
   )
 }
 
