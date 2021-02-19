@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
 import Navigation from "./navigation"
+import { NavigationContext } from "./layout"
 
 const HeaderStyles = styled.header`
   display: flex;
@@ -16,6 +17,11 @@ const HeaderStyles = styled.header`
   background-color: var(--green);
   a {
     text-decoration: none;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 24px 80px;
+    height: 120px;
   }
 `
 

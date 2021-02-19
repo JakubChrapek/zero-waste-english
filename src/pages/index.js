@@ -1,20 +1,15 @@
-import React from "react"
+import React, { useState } from "react"
 import { graphql } from "gatsby"
 import useWindowSize from "../utils/useWindowSize"
 import Img from "gatsby-image"
 import styled from "styled-components"
 import Button from "../components/button"
 import { FiArrowUpRight, FiArrowDownLeft } from "react-icons/fi"
-import VideoPlayer from "../components/videoPlayer"
-import * as Scroll from "react-scroll"
-import {
-  Link as ScrollLink,
-  Element,
-  Events,
-  animateScroll as scroll,
-  scrollSpy,
-  scroller,
-} from "react-scroll"
+import { GrPlayFill } from "react-icons/gr"
+import { ModalContext } from "../components/layout"
+import { Link as ScrollLink } from "react-scroll"
+import { motion } from "framer-motion"
+import { useContext } from "react"
 
 const HomeContainer = styled.div`
   position: relative;
@@ -27,6 +22,18 @@ const HomeStyles = styled.section`
   display: flex;
   flex-direction: column;
   padding: 0 28px 82px;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    height: calc(100vh - 120px);
+    padding: 0 80px 82px;
+    align-items: center;
+    gap: 40px;
+    > * {
+      flex-basis: 50%;
+    }
+  }
+
   h2 {
     font-family: "DM Serif Display";
     color: var(--white);
@@ -52,12 +59,6 @@ const HomeStyles = styled.section`
       color: var(--white);
     }
   }
-
-  @media (min-width: 767px) {
-  }
-
-  @media (min-width: 1024px) {
-  }
 `
 
 const TextContainer = styled.div`
@@ -70,6 +71,40 @@ const TextContainer = styled.div`
     max-width: 460px;
     margin: 0 auto;
   }
+
+  @media (min-width: 1024px) {
+    max-width: unset;
+    margin: 0;
+    text-align: left;
+    align-items: flex-start;
+  }
+`
+
+const ImageWrapper = styled.div`
+  position: relative;
+
+  button {
+    position: absolute;
+    left: 50px;
+    bottom: 50px;
+    height: 130px;
+    width: 130px;
+    border: 0;
+    border-radius: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 8px;
+    cursor: pointer;
+
+    &:focus-visible,
+    &:active,
+    &:focus {
+      filter: drop-shadow(0px 0px 5px var(--black));
+      outline: none;
+      transform: scale(0.95);
+    }
+  }
 `
 
 const StyledArrowDown = styled(FiArrowDownLeft)`
@@ -77,6 +112,7 @@ const StyledArrowDown = styled(FiArrowDownLeft)`
 `
 
 const HomePage = ({ data }) => {
+  const { setModalOpened } = useContext(ModalContext)
   const width = useWindowSize()
   return (
     <HomeContainer>
@@ -101,10 +137,16 @@ const HomePage = ({ data }) => {
             </p>
           </ScrollLink>
         </TextContainer>
-        <Element name="video">
-          <VideoPlayer previewImg={data.bg.fluid.src} />
-        </Element>
-        {/* <VideoPlayer /> */}
+        <ImageWrapper>
+          <Img fluid={data.bg.fluid} alt="Agnieszka smiling at camera" />
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setModalOpened(true)}
+          >
+            <GrPlayFill size="48px" color="var(--black)" />
+          </motion.button>
+        </ImageWrapper>
       </HomeStyles>
     </HomeContainer>
   )

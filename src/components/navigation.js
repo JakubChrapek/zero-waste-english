@@ -35,7 +35,7 @@ const NavigationStyles = styled.nav`
       width: 100%;
       height: 2px;
       background-color: var(--white);
-      transition: transform 0.15s ease;
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     &:after {

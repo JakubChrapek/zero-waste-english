@@ -4,7 +4,7 @@ import ReactPlayer from "react-player/youtube"
 
 const VideoPlayerStyles = styled.div`
   position: relative;
-  margin-top: 70px;
+  width: 100%;
   &:before {
     display: block;
     content: "";
