@@ -2,12 +2,13 @@ import React, { useState } from "react"
 import { Helmet } from "react-helmet"
 import styled, { createGlobalStyle, css } from "styled-components"
 import Header from "./header"
-import "@fontsource/dm-serif-display"
-import "@fontsource/dm-sans"
 import ReactModal from "react-modal"
+import Loader from "./loader"
 import VideoPlayer from "./videoPlayer"
 import { AnimatePresence, motion } from "framer-motion"
 import { GrClose } from "react-icons/gr"
+import "@fontsource/dm-serif-display"
+import "@fontsource/dm-sans"
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -42,30 +43,7 @@ const GlobalStyles = createGlobalStyle`
       outline: none;
     }
   }
-`
-ReactModal.setAppElement("#mainapp")
-
-const navigationData = {
-  navOpened: false,
-  setNavOpened: () => {},
-}
-const modalData = {
-  modalOpened: false,
-  setModalOpened: () => {},
-}
-
-export const NavContext = React.createContext(navigationData)
-export const ModalContext = React.createContext(modalData)
-
-const Layout = ({ title, children }) => {
-  const [isNavigationOpened, setIsNavigationOpened] = useState(false)
-  const [isModalOpened, setIsModalOpened] = useState(false)
-
-  const handleCloseModal = () => {
-    setIsModalOpened(false)
-  }
-
-  const StyledModal = styled(ReactModal)`
+  .close-modal {
     button {
       background: transparent;
       border: none;
@@ -83,7 +61,49 @@ const Layout = ({ title, children }) => {
         outline-offset: 4px;
       }
     }
-  `
+  }
+`
+
+const ExitButtonStyles = styled(motion.button)`
+  background: transparent;
+  border: 0;
+  align-self: flex-end;
+  margin-bottom: 16px;
+  margin-right: -8px;
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--black);
+    outline-offset: 4px;
+  }
+`
+
+ReactModal.setAppElement("#mainapp")
+
+const navigationData = {
+  navOpened: false,
+  setNavOpened: () => {},
+}
+const modalData = {
+  modalOpened: false,
+  setModalOpened: () => {},
+}
+
+export const NavContext = React.createContext(navigationData)
+export const ModalContext = React.createContext(modalData)
+
+const Layout = ({ title, children }) => {
+  const [isNavigationOpened, setIsNavigationOpened] = useState(false)
+  const [isModalOpened, setIsModalOpened] = useState(false)
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+
+  const handleCloseModal = () => {
+    setIsModalOpened(false)
+    setIsVideoLoaded(false)
+  }
 
   return (
     <div id="mainapp">
@@ -116,7 +136,7 @@ const Layout = ({ title, children }) => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
-                <StyledModal
+                <ReactModal
                   isOpen={isModalOpened}
                   contentLabel="tralala"
                   onRequestClose={handleCloseModal}
@@ -124,11 +144,15 @@ const Layout = ({ title, children }) => {
                   style={{
                     overlay: {
                       zIndex: 5,
+                      backgroundColor: "rgba(255,255,255,0.5)",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
                     },
                     content: {
+                      inset: 0,
+                      border: 0,
+                      background: "transparent",
                       zIndex: 5,
                       width: "100%",
                       padding: "20px 20px 40px",
@@ -139,15 +163,17 @@ const Layout = ({ title, children }) => {
                     },
                   }}
                 >
-                  <motion.button
+                  <ExitButtonStyles
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleCloseModal}
+                    className="close-modal"
                   >
-                    <GrClose size="24px" color="var(--black)" />
-                  </motion.button>
-                  <VideoPlayer />
-                </StyledModal>
+                    <GrClose size="32px" color="var(--black)" />
+                  </ExitButtonStyles>
+                  <Loader loaded={isVideoLoaded} />
+                  <VideoPlayer onReady={() => setIsVideoLoaded(true)} />
+                </ReactModal>
               </motion.div>
             )}
           </AnimatePresence>

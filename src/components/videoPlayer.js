@@ -31,7 +31,7 @@ const VideoPlayerStyles = styled.div`
   }
 `
 
-const VideoPlayer = ({ previewImg, url }) => {
+const VideoPlayer = ({ previewImg, url, onReady }) => {
   return (
     <VideoPlayerStyles>
       <ReactPlayer
@@ -40,6 +40,7 @@ const VideoPlayer = ({ previewImg, url }) => {
         light={previewImg ? previewImg : undefined}
         width="100%"
         height="100%"
+        onReady={onReady}
       />
     </VideoPlayerStyles>
   )

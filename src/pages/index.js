@@ -7,7 +7,7 @@ import Button from "../components/button"
 import { FiArrowUpRight, FiArrowDownLeft } from "react-icons/fi"
 import { GrPlayFill } from "react-icons/gr"
 import { ModalContext } from "../components/layout"
-import { Link as ScrollLink } from "react-scroll"
+import { Element, Link as ScrollLink } from "react-scroll"
 import { motion } from "framer-motion"
 import { useContext } from "react"
 
@@ -82,13 +82,17 @@ const TextContainer = styled.div`
 
 const ImageWrapper = styled.div`
   position: relative;
-
+  margin-top: 70px;
   button {
     position: absolute;
-    left: 50px;
-    bottom: 50px;
-    height: 130px;
-    width: 130px;
+    left: 20px;
+    bottom: 40px;
+    width: 75px;
+    height: 75px;
+    @media (min-width: 767px) {
+      height: 130px;
+      width: 130px;
+    }
     border: 0;
     border-radius: 100%;
     display: inline-flex;
@@ -137,16 +141,21 @@ const HomePage = ({ data }) => {
             </p>
           </ScrollLink>
         </TextContainer>
-        <ImageWrapper>
-          <Img fluid={data.bg.fluid} alt="Agnieszka smiling at camera" />
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setModalOpened(true)}
-          >
-            <GrPlayFill size="48px" color="var(--black)" />
-          </motion.button>
-        </ImageWrapper>
+        <Element name="video">
+          <ImageWrapper>
+            <Img fluid={data.bg.fluid} alt="Agnieszka smiling at camera" />
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setModalOpened(true)}
+            >
+              <GrPlayFill
+                size={width > 767 ? "48px" : "30px"}
+                color="var(--black)"
+              />
+            </motion.button>
+          </ImageWrapper>
+        </Element>
       </HomeStyles>
     </HomeContainer>
   )
