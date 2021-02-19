@@ -1,6 +1,7 @@
 import React from "react"
 import styled, { css } from "styled-components"
 import { Link } from "gatsby"
+import { motion } from "framer-motion"
 
 const NavigationStyles = styled.nav`
   z-index: 2;
@@ -8,16 +9,20 @@ const NavigationStyles = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 38px;
-    height: 38px;
+    width: 46px;
+    height: 46px;
     border: 0;
     position: relative;
     background-color: transparent;
     z-index: 3;
     outline: none;
 
-    &:focus-visible,
-    &:active {
+    &:active,
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
       outline: 2px solid var(--white);
       outline-offset: 4px;
     }
@@ -28,45 +33,39 @@ const NavigationStyles = styled.nav`
       position: absolute;
       left: 0;
       width: 100%;
-      height: 3px;
+      height: 2px;
       background-color: var(--white);
       transition: transform 0.15s ease;
     }
 
     &:after {
-      top: 7px;
+      top: 15px;
     }
 
     &:before {
-      bottom: 7px;
-    }
-
-    > span {
-      width: 100%;
-      height: 3px;
-      background-color: var(--white);
-      transition: opacity 0.15s ease;
+      bottom: 15px;
     }
 
     ${({ navOpened }) =>
       navOpened &&
       css`
-        &:focus,
-        &:active {
-          outline: 2px solid var(--black);
-          outline-offset: 4px;
+        &:active,
+        &:focus {
+          outline: none;
         }
-        > span {
-          opacity: 0;
+
+        &:focus-visible {
+          outline: 2px solid var(--green);
+          outline-offset: 4px;
         }
 
         &:after {
-          background-color: var(--black);
-          transform: translateY(10px) rotate(-45deg);
+          background-color: var(--green);
+          transform: translateY(7px) rotate(-45deg);
         }
         &:before {
-          background-color: var(--black);
-          transform: translateY(-10px) rotate(45deg);
+          background-color: var(--green);
+          transform: translateY(-7px) rotate(45deg);
         }
       `}
   }
@@ -95,8 +94,8 @@ const NavigationStyles = styled.nav`
 
     a {
       font-size: 18px;
-      font-family: "Alata";
-      color: var(--black);
+      font-family: "DM Sans";
+      color: var(--green);
       font-weight: 600;
       padding: 26px 12px;
       width: 100%;
@@ -120,7 +119,7 @@ const NavigationStyles = styled.nav`
       &:hover,
       &.active {
         color: var(--white);
-        background-color: var(--black);
+        background-color: var(--green);
       }
       @media (min-width: 767px) {
         font-size: 22px;
@@ -182,9 +181,11 @@ const Navigation = ({
 }) => {
   return (
     <NavigationStyles navOpened={isNavigationOpened}>
-      <button onClick={() => setIsNavigationOpened(!isNavigationOpened)}>
-        <span />
-      </button>
+      <motion.button
+        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.05 }}
+        onClick={() => setIsNavigationOpened(!isNavigationOpened)}
+      />
       <ul className={isNavigationOpened && "show"}>
         <Link onClick={closeNavigation} activeClassName="active" to="/about">
           <li>About</li>

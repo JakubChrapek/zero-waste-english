@@ -1,14 +1,16 @@
-import React from "react"
+import React, { useState } from "react"
 import { Helmet } from "react-helmet"
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle, css } from "styled-components"
 import Header from "./header"
-import "@fontsource/alata"
-import "@fontsource/josefin-sans/300.css"
+import "@fontsource/dm-serif-display"
+import "@fontsource/dm-sans"
 
 const GlobalStyles = createGlobalStyle`
   html {
-    --white: #fff;
-    --black: #2d2d2d;
+    --white: #F4F4F4;
+    --black: #121212;
+    --green : #326D63;
+    --pink: #C37674;
   }
 
   *, *:after, *:before {
@@ -18,28 +20,36 @@ const GlobalStyles = createGlobalStyle`
   } 
 
   body {
-    font-family: "Josefin Sans";
-    height: 100vh;
-    overflow: hidden;
+    font-family: "DM Sans";
+    overflow-x: hidden;
+    ${({ bodyScrollLock }) =>
+      bodyScrollLock &&
+      css`
+        overflow: hidden;
+        height: 100vh;
+      `}
   }
 
   h1 {
-    font-family: "Alata";
+    font-family: "DM Serif Display";
   }
 `
 
 const Layout = ({ title, children }) => {
+  const [isNavigationOpened, setIsNavigationOpened] = useState(false)
+
   return (
     <>
-      <GlobalStyles />
+      <GlobalStyles bodyScrollLock={isNavigationOpened} />
       <Helmet>
         <title>
-          {title
-            ? title
-            : "Wirtualna rzeczywistość w Twoim biznesie | loopstudios"}
+          {title ? title : "Nauka angielskiego | Zero Waste English"}
         </title>
       </Helmet>
-      <Header />
+      <Header
+        isNavigationOpened={isNavigationOpened}
+        setIsNavigationOpened={setIsNavigationOpened}
+      />
       <main>{children}</main>
     </>
   )

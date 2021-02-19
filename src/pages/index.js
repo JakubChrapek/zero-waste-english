@@ -3,59 +3,77 @@ import { graphql } from "gatsby"
 import useWindowSize from "../utils/useWindowSize"
 import Img from "gatsby-image"
 import styled from "styled-components"
+import Button from "../components/button"
+import { FiArrowUpRight, FiArrowDownLeft } from "react-icons/fi"
+import VideoPlayer from "../components/videoPlayer"
+import * as Scroll from "react-scroll"
+import {
+  Link as ScrollLink,
+  Element,
+  Events,
+  animateScroll as scroll,
+  scrollSpy,
+  scroller,
+} from "react-scroll"
 
 const HomeContainer = styled.div`
   position: relative;
-  top: -80px;
-  height: 100vh;
-
-  .gatsby-image-wrapper {
-    position: absolute !important;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-  }
-  @media (min-width: 1024px) {
-    top: -120px;
-  }
+  min-height: 100vh;
+  background-color: var(--green);
 `
 
 const HomeStyles = styled.section`
   height: 100%;
   display: flex;
-  align-items: center;
-  padding: 0 24px;
+  flex-direction: column;
+  padding: 0 28px 82px;
   h2 {
-    font-weight: 300;
-    text-transform: uppercase;
-    font-size: 32px;
-    line-height: 1.1;
+    font-family: "DM Serif Display";
     color: var(--white);
-    padding: 20px 24px;
-    border: 2px solid var(--white);
-    z-index: 1;
-    @media (min-width: 360px) {
-      font-size: 38px;
+    font-size: 36px;
+    line-height: 1.38;
+    font-weight: 400;
+    margin-top: 1em;
+  }
+
+  p {
+    color: var(--white);
+    font-size: 18px;
+    line-height: 1.31;
+    margin-top: 1.5em;
+
+    &.text--uppercase {
+      display: inline-flex;
+      align-items: center;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 1.31;
+      text-transform: uppercase;
+      color: var(--white);
     }
   }
 
   @media (min-width: 767px) {
-    padding: 0 60px;
-    h2 {
-      font-size: 80px;
-      padding: 40px 60px 40px 50px;
-    }
   }
 
   @media (min-width: 1024px) {
-    padding: 0 60px;
-    max-width: 1440px;
-    margin: 0 auto;
-    h2 {
-      padding: 40px 100px 40px 50px;
-    }
   }
+`
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  @media (min-width: 767px) {
+    max-width: 460px;
+    margin: 0 auto;
+  }
+`
+
+const StyledArrowDown = styled(FiArrowDownLeft)`
+  margin-left: 10px;
 `
 
 const HomePage = ({ data }) => {
@@ -63,11 +81,30 @@ const HomePage = ({ data }) => {
   return (
     <HomeContainer>
       <HomeStyles>
-        <h2>
-          Immersive {width > 1024 && <br />}experiences {width > 1024 && <br />}
-          that {width < 767 && <br />}deliver
-        </h2>
-        <Img fluid={width < 1024 ? data.mobile.fluid : data.desktop.fluid} />
+        <TextContainer>
+          <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero,
+            natoque tristique consequat sagittis, faucibus eu amet ridiculus.
+          </p>
+          <Button color="pink" margin="2em 0 0 0">
+            Book a class
+          </Button>
+          <ScrollLink to="video" duration={300} offset={80} smooth={true}>
+            <p className="text--uppercase">
+              Watch sample lesson
+              {width < 767 ? (
+                <StyledArrowDown color="var(--white)" size="24px" />
+              ) : (
+                <FiArrowUpRight color="var(--white)" size="24px" />
+              )}
+            </p>
+          </ScrollLink>
+        </TextContainer>
+        <Element name="video">
+          <VideoPlayer previewImg={data.bg.fluid.src} />
+        </Element>
+        {/* <VideoPlayer /> */}
       </HomeStyles>
     </HomeContainer>
   )
@@ -82,16 +119,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    mobile: imageSharp(
-      fluid: { originalName: { eq: "image-hero-mobile.jpg" } }
-    ) {
-      fluid(quality: 90, maxWidth: 1920) {
-        ...GatsbyImageSharpFluid_withWebp
-      }
-    }
-    desktop: imageSharp(
-      fluid: { originalName: { eq: "image-hero-desktop.jpg" } }
-    ) {
+    bg: imageSharp(fluid: { originalName: { eq: "ag-bg.png" } }) {
       fluid(quality: 90, maxWidth: 1920) {
         ...GatsbyImageSharpFluid_withWebp
       }

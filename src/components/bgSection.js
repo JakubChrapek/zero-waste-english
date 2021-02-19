@@ -8,14 +8,9 @@ const SectionStyles = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 24px 20px;
+  padding: 0 28px 20px;
   position: relative;
-  background-color: ${({ bg }) => (bg ? bg : "var(--black)")};
-  top: -80px;
-
-  @media (min-width: 1024px) {
-    top: -120px;
-  }
+  background-color: ${({ bg }) => (bg ? bg : "var(--green)")};
 `
 
 const LinkStyles = styled(Link)`

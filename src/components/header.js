@@ -7,62 +7,53 @@ const HeaderStyles = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 32px 24px;
+  padding: 24px 28px;
   max-width: 1440px;
   margin: 0 auto;
-  background-color: transparent;
   position: relative;
   z-index: 2;
   height: 80px;
-
-  h1 {
-    font-size: 1.8rem;
-    letter-spacing: 0.8px;
-    line-height: 1em;
-    font-weight: bold;
-  }
-
+  background-color: var(--green);
   a {
     text-decoration: none;
-  }
-
-  @media (min-width: 767px) {
-    padding: 32px 60px;
-  }
-
-  @media (min-width: 1024px) {
-    height: 120px;
-    padding: 0 60px;
-    h1 {
-      font-size: 2rem;
-    }
   }
 `
 
 const LogoStyles = styled(Link)`
-  padding: 18px 0;
+  padding: 8px 0;
   z-index: 3;
 
-  &:focus-visible,
+  &:focus,
   &:active {
-    outline: 2px solid ${({ dark }) => (dark ? "var(--black)" : "var(--white)")};
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--white);
     outline-offset: 4px;
   }
   h1 {
-    color: ${({ dark }) => (dark ? "var(--black)" : "var(--white)")};
+    font-size: 1.5rem;
+    line-height: 1.375;
+    color: ${({ isNavigationOpened }) =>
+      isNavigationOpened ? "var(--green)" : "var(--white)"};
+    font-weight: normal;
   }
 `
 
 const Logo = ({ isNavigationOpened, closeNavigation }) => {
   return (
-    <LogoStyles onClick={closeNavigation} dark={isNavigationOpened} to="/">
-      <h1>loopstudios</h1>
+    <LogoStyles
+      isNavigationOpened={isNavigationOpened}
+      onClick={closeNavigation}
+      to="/"
+    >
+      <h1>Zero Waste English</h1>
     </LogoStyles>
   )
 }
 
-const Header = () => {
-  const [isNavigationOpened, setIsNavigationOpened] = useState(false)
+const Header = ({ isNavigationOpened, setIsNavigationOpened }) => {
   const closeNavigation = () => {
     setIsNavigationOpened(false)
   }
