@@ -1,14 +1,12 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Helmet } from "react-helmet"
-import styled, { createGlobalStyle, css } from "styled-components"
+import { createGlobalStyle, css } from "styled-components"
 import Header from "./header"
 import ReactModal from "react-modal"
-import Loader from "./loader"
-import VideoPlayer from "./videoPlayer"
-import { AnimatePresence, motion } from "framer-motion"
-import { GrClose } from "react-icons/gr"
+import { AnimatePresence } from "framer-motion"
 import "@fontsource/dm-serif-display"
 import "@fontsource/dm-sans"
+import Modal from "./modal"
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -35,6 +33,10 @@ const GlobalStyles = createGlobalStyle`
       `}
   }
 
+  button {
+    cursor: pointer;
+  }
+
   h1 {
     font-family: "DM Serif Display";
   }
@@ -45,7 +47,7 @@ const GlobalStyles = createGlobalStyle`
   }
   .close-modal {
     button {
-      background: transparent;
+      background-color: transparent;
       border: none;
       cursor: pointer;
       margin-bottom: 16px;
@@ -61,23 +63,6 @@ const GlobalStyles = createGlobalStyle`
         outline-offset: 4px;
       }
     }
-  }
-`
-
-const ExitButtonStyles = styled(motion.button)`
-  background: transparent;
-  border: 0;
-  align-self: flex-end;
-  margin-bottom: 16px;
-  margin-right: -8px;
-  &:active,
-  &:focus {
-    outline: none;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--black);
-    outline-offset: 4px;
   }
 `
 
@@ -104,6 +89,21 @@ const Layout = ({ title, children }) => {
     setIsModalOpened(false)
     setIsVideoLoaded(false)
   }
+
+  useEffect(() => {
+    function handleEsc(event) {
+      if (event.defaultPrevented) {
+        return // Do nothing if the event was already processed
+      }
+
+      if (event.key === "Esc") {
+        handleCloseModal()
+      }
+    }
+
+    window.addEventListener("keydown", handleEsc)
+    return () => window.removeEventListener("keydown", handleEsc)
+  }, [])
 
   return (
     <div id="mainapp">
@@ -133,52 +133,12 @@ const Layout = ({ title, children }) => {
           />
           <AnimatePresence>
             {isModalOpened && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                key="wrapper"
-              >
-                <ReactModal
-                  isOpen={isModalOpened}
-                  contentLabel="Szkoła języka angielskiego z Agnieszką"
-                  onRequestClose={handleCloseModal}
-                  shouldCloseOnOverlayClick={true}
-                  style={{
-                    overlay: {
-                      zIndex: 5,
-                      backgroundColor: "rgba(255,255,255,0.5)",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    },
-                    content: {
-                      inset: 0,
-                      border: 0,
-                      background: "transparent",
-                      zIndex: 5,
-                      position: "relative",
-                      width: "100%",
-                      padding: "20px 20px 40px",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    },
-                  }}
-                >
-                  <ExitButtonStyles
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleCloseModal}
-                    className="close-modal"
-                  >
-                    <GrClose size="32px" color="var(--black)" />
-                  </ExitButtonStyles>
-                  {/* <Loader loaded={isVideoLoaded} /> */}
-                  <VideoPlayer onReady={() => setIsVideoLoaded(true)} />
-                </ReactModal>
-              </motion.div>
+              <Modal
+                isModalOpened={isModalOpened}
+                setIsModalOpened={setIsModalOpened}
+                handleCloseModal={handleCloseModal}
+                setIsVideoLoaded={setIsVideoLoaded}
+              />
             )}
           </AnimatePresence>
           <main>{children}</main>

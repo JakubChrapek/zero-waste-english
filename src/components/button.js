@@ -7,19 +7,15 @@ const ButtonStyles = styled(motion.button)`
   line-height: 1.27;
   text-transform: uppercase;
   color: var(--white);
-  padding: ${({ navigation }) => (navigation ? undefined : "1.2em 2.2em")};
+  padding: 1.2em 2.2em;
   border: 0;
   cursor: pointer;
   margin: ${({ margin }) => margin};
-  background: ${({ color, navigation }) =>
-    navigation
-      ? "transparent"
-      : color === "black"
-      ? "var(--black)"
-      : "var(--pink)"};
+  background-color: ${({ color }) =>
+    color === "black" ? "var(--black)" : "var(--pink)"};
   overflow: hidden;
   position: relative;
-  flex: ${({ navigation }) => navigation && "1 1 100%"};
+  min-width: ${({ width }) => width};
 
   &:active,
   &:focus {
@@ -33,33 +29,41 @@ const ButtonStyles = styled(motion.button)`
 
   span {
     z-index: 4;
-    background-color: ${({ navigation }) => navigation && "var(--black)"};
-    padding: ${({ navigation }) => (navigation ? "1em 2em" : undefined)};
   }
 
-  &:after {
-    background: var(--white);
-    content: "";
-    height: 155px;
-    width: 25%;
-    left: -75px;
-    top: -50px;
-    opacity: 0.2;
-    position: absolute;
-    transform: translateX(-75px) rotate(35deg);
-    transition: transform 700ms cubic-bezier(0.19, 1, 0.22, 1);
-    z-index: 3;
-  }
-
-  &:hover {
+  @media (min-width: 1024px) {
     &:after {
-      transform: translateX(calc(400% + 150px)) rotate(35deg);
+      background-color: var(--white);
+      content: "";
+      height: 155px;
+      width: 25%;
+      left: -75px;
+      top: -50px;
+      opacity: 0.2;
+      position: absolute;
+      transform: translateX(-75px) rotate(35deg);
       transition: transform 700ms cubic-bezier(0.19, 1, 0.22, 1);
+      z-index: 3;
+    }
+
+    &:hover {
+      &:after {
+        transform: translateX(calc(400% + 150px)) rotate(35deg);
+        transition: transform 700ms cubic-bezier(0.19, 1, 0.22, 1);
+      }
     }
   }
 `
 
-const Button = ({ children, margin, color, size, navigation, onClick }) => {
+const Button = ({
+  children,
+  margin,
+  color,
+  size,
+  navigation,
+  onClick,
+  width,
+}) => {
   return (
     <ButtonStyles
       margin={margin}
@@ -68,6 +72,7 @@ const Button = ({ children, margin, color, size, navigation, onClick }) => {
       whileTap={{ scale: 0.98 }}
       navigation={navigation}
       onClick={onClick}
+      width={width}
     >
       <span>{children}</span>
     </ButtonStyles>

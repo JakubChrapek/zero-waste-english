@@ -4,73 +4,79 @@ import { Link } from "gatsby"
 import { motion } from "framer-motion"
 import { ModalContext } from "../components/layout"
 import Button from "../components/button"
+import useWindowSize from "../utils/useWindowSize"
+
+const ExitButton = styled(motion.button)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  position: relative;
+  background-color: transparent;
+  z-index: 3;
+  outline: none;
+
+  @media (min-width: 1024px) {
+    display: none;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--white);
+    outline-offset: 4px;
+  }
+
+  &:after,
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--white);
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  &:after {
+    top: 15px;
+  }
+
+  &:before {
+    bottom: 15px;
+  }
+
+  ${({ navOpened }) =>
+    navOpened &&
+    css`
+      &:active,
+      &:focus {
+        outline: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--green);
+        outline-offset: 4px;
+      }
+
+      &:after {
+        background-color: var(--green);
+        transform: translateY(7px) rotate(-45deg);
+      }
+      &:before {
+        background-color: var(--green);
+        transform: translateY(-7px) rotate(45deg);
+      }
+    `}
+`
 
 const NavigationStyles = styled.nav`
   z-index: 2;
-  > button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 46px;
-    height: 46px;
-    border: 0;
-    position: relative;
-    background-color: transparent;
-    z-index: 3;
-    outline: none;
-
-    &:active,
-    &:focus {
-      outline: none;
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--white);
-      outline-offset: 4px;
-    }
-
-    &:after,
-    &:before {
-      content: "";
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background-color: var(--white);
-      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    &:after {
-      top: 15px;
-    }
-
-    &:before {
-      bottom: 15px;
-    }
-
-    ${({ navOpened }) =>
-      navOpened &&
-      css`
-        &:active,
-        &:focus {
-          outline: none;
-        }
-
-        &:focus-visible {
-          outline: 2px solid var(--green);
-          outline-offset: 4px;
-        }
-
-        &:after {
-          background-color: var(--green);
-          transform: translateY(7px) rotate(-45deg);
-        }
-        &:before {
-          background-color: var(--green);
-          transform: translateY(-7px) rotate(45deg);
-        }
-      `}
-  }
 
   ul {
     position: absolute;
@@ -161,6 +167,7 @@ const NavigationStyles = styled.nav`
         position: relative;
         margin: 0 12px;
         pointer-events: all;
+        flex: unset;
 
         &:first-of-type {
           margin: 0 12px 0 0;
@@ -185,6 +192,14 @@ const NavigationStyles = styled.nav`
           }
         }
       }
+
+      ${({ navigation }) =>
+        navigation &&
+        css`
+          button {
+            background-color: red;
+          }
+        `}
     }
     > button {
       display: none;
@@ -198,12 +213,14 @@ const Navigation = ({
   closeNavigation,
 }) => {
   const { setModalOpened } = useContext(ModalContext)
+  const width = useWindowSize()
   return (
     <NavigationStyles navOpened={isnavigationopened}>
-      <motion.button
+      <ExitButton
         whileTap={{ scale: 0.95 }}
         whileHover={{ scale: 1.05 }}
         onClick={() => setIsNavigationOpened(!isnavigationopened)}
+        navOpened={isnavigationopened}
       />
       <ul className={isnavigationopened ? "show" : undefined}>
         <Link onClick={closeNavigation} activeClassName="active" to="/">
@@ -220,11 +237,12 @@ const Navigation = ({
         </Link>
         <Button
           color="black"
-          navigation
+          navigation={width < 1024 ? true : false}
+          margin={width > 1024 ? "0 0 0 24px" : undefined}
+          width="190px"
           onClick={() => {
             closeNavigation()
             setModalOpened(true)
-            console.log("CLICKED")
           }}
         >
           View classes

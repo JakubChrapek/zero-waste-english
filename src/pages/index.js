@@ -105,7 +105,7 @@ const ImageWrapper = styled.div`
     &:active,
     &:focus {
       filter: drop-shadow(0px 0px 5px var(--black));
-      outline: none;
+      outline: 2px solid var(--white);
       transform: scale(0.95);
     }
   }
