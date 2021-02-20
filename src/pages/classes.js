@@ -1,11 +1,11 @@
 import React from "react"
 import BgSection from "../components/bgSection"
 
-const Products = () => {
+const Classes = () => {
   return (
     <>
       <BgSection
-        title="produkty loopstudios"
+        title="odpalamy lekcje?"
         linkAnchor="/"
         linkText="Wróć do strony głównej"
       />
@@ -13,4 +13,4 @@ const Products = () => {
   )
 }
 
-export default Products
+export default Classes

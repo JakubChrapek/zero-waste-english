@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { graphql } from "gatsby"
 import useWindowSize from "../utils/useWindowSize"
 import Img from "gatsby-image"

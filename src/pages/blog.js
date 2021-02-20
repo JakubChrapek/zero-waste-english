@@ -1,11 +1,11 @@
 import React from "react"
 import BgSection from "../components/bgSection"
 
-const Events = () => {
+const Blog = () => {
   return (
     <>
       <BgSection
-        title="wydarzenia z loopstudios"
+        title="aaaale będę pisała"
         linkAnchor="/"
         linkText="Wróć do strony głównej"
       />
@@ -13,4 +13,4 @@ const Events = () => {
   )
 }
 
-export default Events
+export default Blog

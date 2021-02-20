@@ -1,11 +1,14 @@
-import React from "react"
+import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 import { Link } from "gatsby"
 import { motion } from "framer-motion"
+import useWindowSize from "../utils/useWindowSize"
+import { ModalContext } from "../components/layout"
+import Button from "../components/button"
 
 const NavigationStyles = styled.nav`
   z-index: 2;
-  button {
+  > button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,18 +87,22 @@ const NavigationStyles = styled.nav`
     transition: opacity 0.2s ease;
     pointer-events: none;
     height: 100vh;
-    padding-top: 40px;
+    padding-top: 80px;
     z-index: 2;
 
     &.show {
       pointer-events: all;
       opacity: 1;
+      a {
+        pointer-events: all;
+      }
     }
 
     a {
       font-size: 18px;
       font-family: "DM Sans";
       color: var(--green);
+      pointer-events: none;
       font-weight: 600;
       padding: 26px 12px;
       width: 100%;
@@ -103,6 +110,10 @@ const NavigationStyles = styled.nav`
       letter-spacing: 1px;
       transition: background-color 0.15s ease;
       position: relative;
+      flex: 1 1 100%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
 
       &:after {
         content: "";
@@ -116,6 +127,13 @@ const NavigationStyles = styled.nav`
         transform: scaleX(0);
         transition: transform 0.3s ease;
       }
+
+      &:focus-visible,
+      &:active {
+        outline: 2px solid var(--green);
+        outline-offset: -3px;
+      }
+
       &:hover,
       &.active {
         color: var(--white);
@@ -143,6 +161,7 @@ const NavigationStyles = styled.nav`
         line-height: 1;
         position: relative;
         margin: 0 12px;
+        pointer-events: all;
 
         &:first-of-type {
           margin: 0 12px 0 0;
@@ -168,40 +187,49 @@ const NavigationStyles = styled.nav`
         }
       }
     }
-    button {
+    > button {
       display: none;
     }
   }
 `
 
 const Navigation = ({
-  isNavigationOpened,
+  isnavigationopened,
   setIsNavigationOpened,
   closeNavigation,
 }) => {
+  const { setModalOpened } = useContext(ModalContext)
   return (
-    <NavigationStyles navOpened={isNavigationOpened}>
+    <NavigationStyles navOpened={isnavigationopened}>
       <motion.button
         whileTap={{ scale: 0.95 }}
         whileHover={{ scale: 1.05 }}
-        onClick={() => setIsNavigationOpened(!isNavigationOpened)}
+        onClick={() => setIsNavigationOpened(!isnavigationopened)}
       />
-      <ul className={isNavigationOpened && "show"}>
+      <ul className={isnavigationopened ? "show" : undefined}>
+        <Link onClick={closeNavigation} activeClassName="active" to="/">
+          <li>Home</li>
+        </Link>
+        <Link onClick={closeNavigation} activeClassName="active" to="/classes">
+          <li>Classes</li>
+        </Link>
         <Link onClick={closeNavigation} activeClassName="active" to="/about">
           <li>About</li>
         </Link>
-        <Link onClick={closeNavigation} activeClassName="active" to="/careers">
-          <li>Careers</li>
+        <Link onClick={closeNavigation} activeClassName="active" to="/blog">
+          <li>Blog</li>
         </Link>
-        <Link onClick={closeNavigation} activeClassName="active" to="/events">
-          <li>Events</li>
-        </Link>
-        <Link onClick={closeNavigation} activeClassName="active" to="/products">
-          <li>Products</li>
-        </Link>
-        <Link onClick={closeNavigation} activeClassName="active" to="/support">
-          <li>Support</li>
-        </Link>
+        <Button
+          color="black"
+          navigation
+          onClick={() => {
+            closeNavigation()
+            setModalOpened(true)
+            console.log("CLICKED")
+          }}
+        >
+          View classes
+        </Button>
       </ul>
     </NavigationStyles>
   )

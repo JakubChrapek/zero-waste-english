@@ -8,7 +8,7 @@ const SectionStyles = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 28px 20px;
+  padding: 0 28px 15%;
   position: relative;
   background-color: ${({ bg }) => (bg ? bg : "var(--green)")};
 `
@@ -27,12 +27,19 @@ const LinkStyles = styled(Link)`
     outline: 2px solid var(--white);
     outline-offset: -1px;
   }
+
+  @media (min-width: 767px) {
+    font-size: 42px;
+  }
 `
 
 const HeaderStyles = styled.h1`
   color: var(--white);
   font-size: 2rem;
   text-align: center;
+  @media (min-width: 767px) {
+    font-size: 7rem;
+  }
 `
 
 const BgSection = ({ bg, top, title, linkAnchor, linkText, children }) => {

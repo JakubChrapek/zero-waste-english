@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { motion } from "framer-motion"
 
 const ButtonStyles = styled(motion.button)`
@@ -7,14 +7,19 @@ const ButtonStyles = styled(motion.button)`
   line-height: 1.27;
   text-transform: uppercase;
   color: var(--white);
-  padding: 1.2em 2.2em;
+  padding: ${({ navigation }) => (navigation ? undefined : "1.2em 2.2em")};
   border: 0;
   cursor: pointer;
   margin: ${({ margin }) => margin};
-  background: ${({ color }) =>
-    color === "black" ? "var(--black)" : "var(--pink)"};
+  background: ${({ color, navigation }) =>
+    navigation
+      ? "transparent"
+      : color === "black"
+      ? "var(--black)"
+      : "var(--pink)"};
   overflow: hidden;
   position: relative;
+  flex: ${({ navigation }) => navigation && "1 1 100%"};
 
   &:active,
   &:focus {
@@ -28,6 +33,8 @@ const ButtonStyles = styled(motion.button)`
 
   span {
     z-index: 4;
+    background-color: ${({ navigation }) => navigation && "var(--black)"};
+    padding: ${({ navigation }) => (navigation ? "1em 2em" : undefined)};
   }
 
   &:after {
@@ -52,13 +59,15 @@ const ButtonStyles = styled(motion.button)`
   }
 `
 
-const Button = ({ children, margin, color, size }) => {
+const Button = ({ children, margin, color, size, navigation, onClick }) => {
   return (
     <ButtonStyles
       margin={margin}
       color={color}
       size={size}
       whileTap={{ scale: 0.98 }}
+      navigation={navigation}
+      onClick={onClick}
     >
       <span>{children}</span>
     </ButtonStyles>

@@ -5,7 +5,7 @@ const About = () => {
   return (
     <>
       <BgSection
-        title="o nas"
+        title="o mnie - Ag 🚀"
         linkAnchor="/"
         linkText="Wróć do strony głównej"
       />

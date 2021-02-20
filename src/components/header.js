@@ -1,8 +1,7 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
 import Navigation from "./navigation"
-import { NavigationContext } from "./layout"
 
 const HeaderStyles = styled.header`
   display: flex;
@@ -41,16 +40,16 @@ const LogoStyles = styled(Link)`
   h1 {
     font-size: 1.5rem;
     line-height: 1.375;
-    color: ${({ isNavigationOpened }) =>
-      isNavigationOpened ? "var(--green)" : "var(--white)"};
+    color: ${({ isnavigationopened }) =>
+      isnavigationopened ? "var(--green)" : "var(--white)"};
     font-weight: normal;
   }
 `
 
-const Logo = ({ isNavigationOpened, closeNavigation }) => {
+const Logo = ({ isnavigationopened, closeNavigation }) => {
   return (
     <LogoStyles
-      isNavigationOpened={isNavigationOpened}
+      isnavigationopened={isnavigationopened ? isnavigationopened : undefined}
       onClick={closeNavigation}
       to="/"
     >
@@ -59,18 +58,18 @@ const Logo = ({ isNavigationOpened, closeNavigation }) => {
   )
 }
 
-const Header = ({ isNavigationOpened, setIsNavigationOpened }) => {
+const Header = ({ isnavigationopened, setIsNavigationOpened }) => {
   const closeNavigation = () => {
     setIsNavigationOpened(false)
   }
   return (
     <HeaderStyles>
       <Logo
-        isNavigationOpened={isNavigationOpened}
+        isnavigationopened={isnavigationopened ? isnavigationopened : undefined}
         closeNavigation={closeNavigation}
       />
       <Navigation
-        isNavigationOpened={isNavigationOpened}
+        isnavigationopened={isnavigationopened ? isnavigationopened : undefined}
         setIsNavigationOpened={setIsNavigationOpened}
         closeNavigation={closeNavigation}
       />
