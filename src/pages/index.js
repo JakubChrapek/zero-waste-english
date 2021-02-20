@@ -15,6 +15,9 @@ const HomeContainer = styled.div`
   position: relative;
   min-height: 100vh;
   background-color: var(--green);
+  @media (min-width: 1024px) {
+    min-height: unset;
+  }
 `
 
 const HomeStyles = styled.section`
@@ -22,17 +25,8 @@ const HomeStyles = styled.section`
   display: flex;
   flex-direction: column;
   padding: 0 28px 82px;
-
-  @media (min-width: 1024px) {
-    flex-direction: row;
-    height: calc(100vh - 120px);
-    padding: 0 80px 82px;
-    align-items: center;
-    gap: 40px;
-    > * {
-      flex-basis: 50%;
-    }
-  }
+  max-width: 1440px;
+  margin: 0 auto;
 
   h2 {
     font-family: "DM Serif Display";
@@ -59,6 +53,43 @@ const HomeStyles = styled.section`
       color: var(--white);
     }
   }
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    height: calc(100vh - 120px);
+    padding: 0 80px 82px;
+    align-items: center;
+    gap: 40px;
+    > * {
+      flex-basis: 50%;
+    }
+    h2 {
+      font-size: 56px;
+    }
+
+    p {
+      font-size: 24px;
+      font-weight: 400;
+    }
+
+    .text--uppercase {
+      margin-left: 28px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    h2 {
+      font-size: 64px;
+    }
+  }
+  @media (min-width: 1440px) {
+    h2 {
+      font-size: 72px;
+    }
+  }
+  @media (min-width: 1600px) {
+    align-items: flex-start;
+  }
 `
 
 const TextContainer = styled.div`
@@ -66,6 +97,7 @@ const TextContainer = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
+  flex-basis: 65%;
 
   @media (min-width: 767px) {
     max-width: 460px;
@@ -77,12 +109,17 @@ const TextContainer = styled.div`
     margin: 0;
     text-align: left;
     align-items: flex-start;
+
+    > div {
+      margin-top: 4em;
+    }
   }
 `
 
 const ImageWrapper = styled.div`
   position: relative;
   margin-top: 70px;
+  flex-basis: 35%;
   button {
     position: absolute;
     left: 20px;
@@ -127,19 +164,19 @@ const HomePage = ({ data }) => {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero,
             natoque tristique consequat sagittis, faucibus eu amet ridiculus.
           </p>
-          <Button color="pink" margin="2em 0 0 0">
-            Book a class
-          </Button>
-          <ScrollLink to="video" duration={300} offset={80} smooth={true}>
-            <p className="text--uppercase">
-              Watch sample lesson
-              {width < 767 ? (
-                <StyledArrowDown color="var(--white)" size="24px" />
-              ) : (
-                <FiArrowUpRight color="var(--white)" size="24px" />
-              )}
-            </p>
-          </ScrollLink>
+          <div>
+            <Button color="pink">Book a class</Button>
+            <ScrollLink to="video" duration={300} offset={80} smooth={true}>
+              <p className="text--uppercase">
+                Watch sample lesson
+                {width < 767 ? (
+                  <StyledArrowDown color="var(--white)" size="24px" />
+                ) : (
+                  <FiArrowUpRight color="var(--white)" size="24px" />
+                )}
+              </p>
+            </ScrollLink>
+          </div>
         </TextContainer>
         <Element name="video">
           <ImageWrapper>

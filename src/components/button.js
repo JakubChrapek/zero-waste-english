@@ -10,12 +10,13 @@ const ButtonStyles = styled(motion.button)`
   padding: 1.2em 2.2em;
   border: 0;
   cursor: pointer;
-  margin: ${({ margin }) => margin};
+  margin: ${({ margin }) => (margin ? margin : "0")};
   background-color: ${({ color }) =>
     color === "black" ? "var(--black)" : "var(--pink)"};
   overflow: hidden;
   position: relative;
   min-width: ${({ width }) => width};
+  flex: ${({ flex }) => flex};
 
   &:active,
   &:focus {
@@ -63,6 +64,7 @@ const Button = ({
   navigation,
   onClick,
   width,
+  flex,
 }) => {
   return (
     <ButtonStyles
@@ -73,6 +75,7 @@ const Button = ({
       navigation={navigation}
       onClick={onClick}
       width={width}
+      flex={flex}
     >
       <span>{children}</span>
     </ButtonStyles>

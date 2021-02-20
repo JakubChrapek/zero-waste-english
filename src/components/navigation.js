@@ -165,16 +165,16 @@ const NavigationStyles = styled.nav`
         font-size: 16px;
         line-height: 1;
         position: relative;
-        margin: 0 12px;
+        margin: 0 16px;
         pointer-events: all;
         flex: unset;
 
         &:first-of-type {
-          margin: 0 12px 0 0;
+          margin: 0 16px 0 0;
         }
 
         &:last-of-type {
-          margin: 0 0 0 12px;
+          margin: 0 0 0 16px;
         }
 
         &:focus-visible,
@@ -193,6 +193,11 @@ const NavigationStyles = styled.nav`
         }
       }
 
+      button {
+        padding: 0.8em 1.5em;
+        margin-left: 40px;
+      }
+
       ${({ navigation }) =>
         navigation &&
         css`
@@ -203,6 +208,24 @@ const NavigationStyles = styled.nav`
     }
     > button {
       display: none;
+    }
+    @media (min-width: 1144px) {
+      ul {
+        a {
+          margin: 0 22px;
+
+          &:first-of-type {
+            margin: 0 22px 0 0;
+          }
+
+          &:last-of-type {
+            margin: 0 0 0 22px;
+          }
+        }
+        button {
+          margin-left: 56px;
+        }
+      }
     }
   }
 `
@@ -238,7 +261,7 @@ const Navigation = ({
         <Button
           color="black"
           navigation={width < 1024 ? true : false}
-          margin={width > 1024 ? "0 0 0 24px" : undefined}
+          flex={width < 1024 && "1 1 100%"}
           width="190px"
           onClick={() => {
             closeNavigation()

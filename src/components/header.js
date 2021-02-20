@@ -3,6 +3,10 @@ import styled from "styled-components"
 import { Link } from "gatsby"
 import Navigation from "./navigation"
 
+const HeaderWrapper = styled.div`
+  background-color: var(--green);
+`
+
 const HeaderStyles = styled.header`
   display: flex;
   align-items: center;
@@ -13,7 +17,6 @@ const HeaderStyles = styled.header`
   position: relative;
   z-index: 2;
   height: 80px;
-  background-color: var(--green);
   a {
     text-decoration: none;
   }
@@ -63,17 +66,23 @@ const Header = ({ isnavigationopened, setIsNavigationOpened }) => {
     setIsNavigationOpened(false)
   }
   return (
-    <HeaderStyles>
-      <Logo
-        isnavigationopened={isnavigationopened ? isnavigationopened : undefined}
-        closeNavigation={closeNavigation}
-      />
-      <Navigation
-        isnavigationopened={isnavigationopened ? isnavigationopened : undefined}
-        setIsNavigationOpened={setIsNavigationOpened}
-        closeNavigation={closeNavigation}
-      />
-    </HeaderStyles>
+    <HeaderWrapper>
+      <HeaderStyles>
+        <Logo
+          isnavigationopened={
+            isnavigationopened ? isnavigationopened : undefined
+          }
+          closeNavigation={closeNavigation}
+        />
+        <Navigation
+          isnavigationopened={
+            isnavigationopened ? isnavigationopened : undefined
+          }
+          setIsNavigationOpened={setIsNavigationOpened}
+          closeNavigation={closeNavigation}
+        />
+      </HeaderStyles>
+    </HeaderWrapper>
   )
 }
 
