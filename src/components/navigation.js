@@ -2,7 +2,6 @@ import React, { useContext } from "react"
 import styled, { css } from "styled-components"
 import { Link } from "gatsby"
 import { motion } from "framer-motion"
-import useWindowSize from "../utils/useWindowSize"
 import { ModalContext } from "../components/layout"
 import Button from "../components/button"
 

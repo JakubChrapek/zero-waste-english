@@ -31,13 +31,12 @@ const VideoPlayerStyles = styled.div`
   }
 `
 
-const VideoPlayer = ({ previewImg, url, onReady }) => {
+const VideoPlayer = ({ url, onReady }) => {
   return (
     <VideoPlayerStyles>
       <ReactPlayer
         className="react-player"
         url={url ? url : "https://www.youtube.com/watch?v=ysz5S6PUM-U"}
-        light={previewImg ? previewImg : undefined}
         width="100%"
         height="100%"
         onReady={onReady}

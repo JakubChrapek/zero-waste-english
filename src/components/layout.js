@@ -131,16 +131,17 @@ const Layout = ({ title, children }) => {
             }
             setIsNavigationOpened={setIsNavigationOpened}
           />
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence>
             {isModalOpened && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                key="wrapper"
               >
                 <ReactModal
                   isOpen={isModalOpened}
-                  contentLabel="tralala"
+                  contentLabel="Szkoła języka angielskiego z Agnieszką"
                   onRequestClose={handleCloseModal}
                   shouldCloseOnOverlayClick={true}
                   style={{
@@ -174,7 +175,7 @@ const Layout = ({ title, children }) => {
                   >
                     <GrClose size="32px" color="var(--black)" />
                   </ExitButtonStyles>
-                  <Loader loaded={isVideoLoaded} />
+                  {/* <Loader loaded={isVideoLoaded} /> */}
                   <VideoPlayer onReady={() => setIsVideoLoaded(true)} />
                 </ReactModal>
               </motion.div>
