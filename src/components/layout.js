@@ -24,6 +24,9 @@ const GlobalStyles = createGlobalStyle`
   body {
     font-family: "DM Sans";
     overflow-x: hidden;
+    &.no-js {
+      visibility: hidden;
+    }
     ${({ bodyScrollLock }) =>
       bodyScrollLock &&
       css`
