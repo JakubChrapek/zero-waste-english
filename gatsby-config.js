@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `🚀 Wirtualna rzecztywistość z loopstudios`,
-    description: `Prosta sekcja powitalna na stronie - hero section w Gatsby.js`,
+    title: `Zero Waste English - ekologiczna nauka języka angielskiego`,
+    description: `Redesign Zero Waste English - szkoły języka angielskiego online`,
   },
   plugins: [
     {
@@ -22,8 +22,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `loopstudios`,
-        short_name: `VR w biznesie`,
+        name: `Zero Waste English`,
+        short_name: `No Waste Eng`,
         start_url: `/`,
         background_color: `#2d2d2d`,
         theme_color: `#2d2d2d`,

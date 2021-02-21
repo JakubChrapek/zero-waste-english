@@ -6,7 +6,7 @@ exports.wrapPageElement = ({ element, props }) => {
   return <Layout {...props}>{element}</Layout>
 }
 
-exports.onClientEntry = () => {
+exports.onRenderBody = () => {
   window.addEventListener("load", () => {
     const body = document.querySelector("body")
     body.className = document.body.className.replace(/\bno-js\b/, "")
