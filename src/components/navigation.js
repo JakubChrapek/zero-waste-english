@@ -162,7 +162,7 @@ const NavigationStyles = styled.nav`
 
       a {
         color: var(--white);
-        font-size: 16px;
+        font-size: 18px;
         line-height: 1;
         position: relative;
         margin: 0 16px;

@@ -22,8 +22,11 @@ const HeaderStyles = styled.header`
   }
 
   @media (min-width: 1024px) {
-    padding: 24px 80px;
+    padding: 24px 40px;
     height: 120px;
+  }
+  @media (min-width: 1200px) {
+    padding: 24px 80px;
   }
 `
 

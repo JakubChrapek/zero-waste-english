@@ -3,7 +3,7 @@ import React from "react"
 import styled from "styled-components"
 
 const SectionStyles = styled.section`
-  height: 100vh;
+  height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,6 +11,9 @@ const SectionStyles = styled.section`
   padding: 0 28px 15%;
   position: relative;
   background-color: ${({ bg }) => (bg ? bg : "var(--green)")};
+  @media (min-width: 1024px) {
+    height: calc(100vh - 120px);
+  }
 `
 
 const LinkStyles = styled(Link)`
@@ -21,11 +24,23 @@ const LinkStyles = styled(Link)`
   padding: 16px 0;
   text-align: center;
   margin-top: 0.8em;
+  position: relative;
+
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size 0.3s;
+
+  &:hover {
+    background-size: 100% 2px;
+  }
 
   &:focus-visible,
   &:active {
-    outline: 2px solid var(--white);
-    outline-offset: -1px;
+    outline: none;
+    background-size: 100% 2px;
   }
 
   @media (min-width: 767px) {

@@ -1,8 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 import ReactPlayer from "react-player/youtube"
+import { motion } from "framer-motion"
 
-const VideoPlayerStyles = styled.div`
+const VideoPlayerStyles = styled(motion.div)`
   position: relative;
   width: 100%;
   &:before {
@@ -31,15 +32,22 @@ const VideoPlayerStyles = styled.div`
   }
 `
 
-const VideoPlayer = ({ url, onReady }) => {
+const VideoPlayer = ({ url, isVideoLoaded, setIsVideoLoaded, onReady }) => {
   return (
-    <VideoPlayerStyles>
+    <VideoPlayerStyles
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { duration: 0.7, delay: 0.5 } }}
+      exit={{ opacity: 0 }}
+    >
       <ReactPlayer
         className="react-player"
         url={url ? url : "https://www.youtube.com/watch?v=ysz5S6PUM-U"}
         width="100%"
         height="100%"
-        onReady={onReady}
+        onReady={() => {
+          setIsVideoLoaded(true)
+        }}
+        controls
       />
     </VideoPlayerStyles>
   )

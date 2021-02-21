@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet"
 import { createGlobalStyle, css } from "styled-components"
 import Header from "./header"
 import ReactModal from "react-modal"
-import { AnimatePresence } from "framer-motion"
 import "@fontsource/dm-serif-display"
 import "@fontsource/dm-sans"
 import Modal from "./modal"
@@ -40,11 +39,31 @@ const GlobalStyles = createGlobalStyle`
   h1 {
     font-family: "DM Serif Display";
   }
-  .ReactModal__Content--after-open {
-    &:focus {
-      outline: none;
+  .ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 500ms ease;
+    &--after-open {
+      opacity: 1;
+      &:focus {
+        outline: none;
+      }
+    }
+    &--before-close {
+      opacity: 0;
     }
   }
+
+  .ReactModal__Content {
+    width: calc(100% - 40px);
+    @media (min-width: 1023px) {
+      width: calc(100% - 80px);
+    }
+    @media (min-width: 1200px) {
+      width: calc(100% - 160px);
+      max-width: 1280px;
+    }
+  }
+
   .close-modal {
     button {
       background-color: transparent;
@@ -131,16 +150,13 @@ const Layout = ({ title, children }) => {
             }
             setIsNavigationOpened={setIsNavigationOpened}
           />
-          <AnimatePresence>
-            {isModalOpened && (
-              <Modal
-                isModalOpened={isModalOpened}
-                setIsModalOpened={setIsModalOpened}
-                handleCloseModal={handleCloseModal}
-                setIsVideoLoaded={setIsVideoLoaded}
-              />
-            )}
-          </AnimatePresence>
+          <Modal
+            isModalOpened={isModalOpened}
+            setIsModalOpened={setIsModalOpened}
+            handleCloseModal={handleCloseModal}
+            isVideoLoaded={isVideoLoaded}
+            setIsVideoLoaded={setIsVideoLoaded}
+          />
           <main>{children}</main>
         </ModalContext.Provider>
       </NavContext.Provider>

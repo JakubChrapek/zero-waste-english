@@ -57,14 +57,14 @@ const HomeStyles = styled.section`
   @media (min-width: 1024px) {
     flex-direction: row;
     height: calc(100vh - 120px);
-    padding: 0 80px 82px;
+    padding: 0 40px 82px;
     align-items: center;
     gap: 40px;
     > * {
       flex-basis: 50%;
     }
     h2 {
-      font-size: 56px;
+      font-size: 54px;
     }
 
     p {
@@ -74,12 +74,14 @@ const HomeStyles = styled.section`
 
     .text--uppercase {
       margin-left: 28px;
+      margin-top: 0;
     }
   }
 
   @media (min-width: 1200px) {
+    padding: 0 80px 82px;
     h2 {
-      font-size: 64px;
+      font-size: 60px;
     }
   }
   @media (min-width: 1440px) {
@@ -99,6 +101,13 @@ const TextContainer = styled.div`
   text-align: center;
   flex-basis: 65%;
 
+  > div {
+    margin-top: 3em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   @media (min-width: 767px) {
     max-width: 460px;
     margin: 0 auto;
@@ -112,6 +121,7 @@ const TextContainer = styled.div`
 
     > div {
       margin-top: 4em;
+      flex-direction: row;
     }
   }
 `
@@ -165,7 +175,9 @@ const HomePage = ({ data }) => {
             natoque tristique consequat sagittis, faucibus eu amet ridiculus.
           </p>
           <div>
-            <Button color="pink">Book a class</Button>
+            <Button color="pink" onClick={() => setModalOpened(true)}>
+              Book a class
+            </Button>
             <ScrollLink to="video" duration={300} offset={80} smooth={true}>
               <p className="text--uppercase">
                 Watch sample lesson
