@@ -57,7 +57,7 @@ const HeaderStyles = styled.h1`
   }
 `
 
-const BgSection = ({ bg, top, title, linkAnchor, linkText, children }) => {
+const BgSection = ({ bg, top, title, linkAnchor, linkText }) => {
   return (
     <SectionStyles bg={bg} top={top}>
       <HeaderStyles>{title}</HeaderStyles>

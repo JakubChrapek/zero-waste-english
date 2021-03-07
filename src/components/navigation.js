@@ -151,6 +151,8 @@ const NavigationStyles = styled.nav`
   }
   /* desktop */
   @media (min-width: 1024px) {
+    flex-basis: 80%;
+    max-width: 790px;
     ul {
       opacity: 1;
       position: relative;
@@ -231,29 +233,29 @@ const NavigationStyles = styled.nav`
 `
 
 const Navigation = ({
-  isnavigationopened,
+  isNavigationOpened,
   setIsNavigationOpened,
   closeNavigation,
 }) => {
   const { setModalOpened } = useContext(ModalContext)
   const width = useWindowSize()
   return (
-    <NavigationStyles navOpened={isnavigationopened}>
+    <NavigationStyles navOpened={isNavigationOpened}>
       <ExitButton
         whileTap={{ scale: 0.95 }}
         whileHover={{ scale: 1.05 }}
-        onClick={() => setIsNavigationOpened(!isnavigationopened)}
-        navOpened={isnavigationopened}
+        onClick={() => setIsNavigationOpened(!isNavigationOpened)}
+        navOpened={isNavigationOpened}
       />
-      <ul className={isnavigationopened ? "show" : undefined}>
+      <ul className={isNavigationOpened ? "show" : undefined}>
         <Link onClick={closeNavigation} activeClassName="active" to="/">
           <li>Home</li>
         </Link>
         <Link onClick={closeNavigation} activeClassName="active" to="/classes">
-          <li>Classes</li>
+          <li>Zajęcia</li>
         </Link>
         <Link onClick={closeNavigation} activeClassName="active" to="/about">
-          <li>About</li>
+          <li>O mnie</li>
         </Link>
         <Link onClick={closeNavigation} activeClassName="active" to="/blog">
           <li>Blog</li>
@@ -262,13 +264,13 @@ const Navigation = ({
           color="black"
           navigation={width < 1024 ? true : false}
           flex={width < 1024 && "1 1 100%"}
-          width="190px"
+          width="225px"
           onClick={() => {
             closeNavigation()
             setModalOpened(true)
           }}
         >
-          View classes
+          Test poziomujący
         </Button>
       </ul>
     </NavigationStyles>

@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { motion } from "framer-motion"
 
 const ButtonStyles = styled(motion.button)`
@@ -8,6 +8,9 @@ const ButtonStyles = styled(motion.button)`
   text-transform: uppercase;
   color: var(--white);
   padding: 1.2em 2.2em;
+  @media (max-width: 380px) {
+    padding: 1.2em 1.8em;
+  }
   border: 0;
   cursor: pointer;
   margin: ${({ margin }) => (margin ? margin : "0")};
@@ -33,6 +36,14 @@ const ButtonStyles = styled(motion.button)`
   }
 
   @media (min-width: 1024px) {
+    max-width: 275px;
+    align-self: center;
+    ${({ navigation }) =>
+      navigation &&
+      css`
+        min-width: 235px;
+        padding: 1.2em 1.2em;
+      `}
     &:after {
       background-color: var(--white);
       content: "";

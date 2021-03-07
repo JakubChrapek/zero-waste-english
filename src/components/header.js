@@ -33,6 +33,8 @@ const HeaderStyles = styled.header`
 const LogoStyles = styled(Link)`
   padding: 8px 0;
   z-index: 3;
+  flex-basis: 20%;
+  min-width: 118px;
 
   &:focus,
   &:active {
@@ -46,25 +48,25 @@ const LogoStyles = styled(Link)`
   h1 {
     font-size: 1.5rem;
     line-height: 1.375;
-    color: ${({ isnavigationopened }) =>
-      isnavigationopened ? "var(--green)" : "var(--white)"};
+    color: ${({ isNavigationOpened }) =>
+      isNavigationOpened ? "var(--green)" : "var(--white)"};
     font-weight: normal;
   }
 `
 
-const Logo = ({ isnavigationopened, closeNavigation }) => {
+const Logo = ({ isNavigationOpened, closeNavigation }) => {
   return (
     <LogoStyles
-      isnavigationopened={isnavigationopened ? isnavigationopened : undefined}
+      isNavigationOpened={isNavigationOpened ? isNavigationOpened : undefined}
       onClick={closeNavigation}
       to="/"
     >
-      <h1>Zero Waste English</h1>
+      <h1>Zero Waste</h1>
     </LogoStyles>
   )
 }
 
-const Header = ({ isnavigationopened, setIsNavigationOpened }) => {
+const Header = ({ isNavigationOpened, setIsNavigationOpened }) => {
   const closeNavigation = () => {
     setIsNavigationOpened(false)
   }
@@ -72,14 +74,14 @@ const Header = ({ isnavigationopened, setIsNavigationOpened }) => {
     <HeaderWrapper>
       <HeaderStyles>
         <Logo
-          isnavigationopened={
-            isnavigationopened ? isnavigationopened : undefined
+          isNavigationOpened={
+            isNavigationOpened ? isNavigationOpened : undefined
           }
           closeNavigation={closeNavigation}
         />
         <Navigation
-          isnavigationopened={
-            isnavigationopened ? isnavigationopened : undefined
+          isNavigationOpened={
+            isNavigationOpened ? isNavigationOpened : undefined
           }
           setIsNavigationOpened={setIsNavigationOpened}
           closeNavigation={closeNavigation}

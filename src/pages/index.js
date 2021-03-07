@@ -106,6 +106,7 @@ const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
 
   @media (min-width: 767px) {
@@ -169,18 +170,23 @@ const HomePage = ({ data }) => {
     <HomeContainer>
       <HomeStyles>
         <TextContainer>
-          <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+          <h2>Ucz się angielskiego, dbaj o&nbsp;środowisko.</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero,
-            natoque tristique consequat sagittis, faucibus eu amet ridiculus.
+            Zapomnij o&nbsp;stosach papierów, drogich podręcznikach
+            i&nbsp;kserówkach. Odkryj, jak zajęcia online mogą wyglądać
+            w&nbsp;XXI wieku!
           </p>
           <div>
-            <Button color="pink" onClick={() => setModalOpened(true)}>
-              Book a class
+            <Button
+              flex="1 1 65%"
+              color="pink"
+              onClick={() => setModalOpened(true)}
+            >
+              Zarezerwuj lekcję
             </Button>
             <ScrollLink to="video" duration={300} offset={80} smooth={true}>
               <p className="text--uppercase">
-                Watch sample lesson
+                Zobacz lekcję próbną
                 {width < 767 ? (
                   <StyledArrowDown color="var(--white)" size="24px" />
                 ) : (

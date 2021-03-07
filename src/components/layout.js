@@ -103,7 +103,7 @@ export const NavContext = React.createContext(navigationData)
 export const ModalContext = React.createContext(modalData)
 
 const Layout = ({ title, children }) => {
-  const [isnavigationopened, setIsNavigationOpened] = useState(false)
+  const [isNavigationOpened, setIsNavigationOpened] = useState(false)
   const [isModalOpened, setIsModalOpened] = useState(false)
   const [isVideoLoaded, setIsVideoLoaded] = useState(false)
 
@@ -131,7 +131,7 @@ const Layout = ({ title, children }) => {
     <div id="mainapp">
       <NavContext.Provider
         value={{
-          navOpened: isnavigationopened,
+          navOpened: isNavigationOpened,
           setNavOpened: setIsNavigationOpened,
         }}
       >
@@ -141,15 +141,15 @@ const Layout = ({ title, children }) => {
             setModalOpened: setIsModalOpened,
           }}
         >
-          <GlobalStyles bodyScrollLock={isnavigationopened || isModalOpened} />
+          <GlobalStyles bodyScrollLock={isNavigationOpened || isModalOpened} />
           <Helmet>
             <title>
               {title ? title : "Nauka angielskiego | Zero Waste English"}
             </title>
           </Helmet>
           <Header
-            isnavigationopened={
-              isnavigationopened ? isnavigationopened : undefined
+            isNavigationOpened={
+              isNavigationOpened ? isNavigationOpened : undefined
             }
             setIsNavigationOpened={setIsNavigationOpened}
           />
